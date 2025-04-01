@@ -18,25 +18,32 @@ TEMPLATE = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Moon</title>
     <style>
-        body {
-            background-color: #000000;
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            height: 100vh;
+            background-color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
-        .moon {
-            width: min(80vw, 80vh, 500px);
-            height: min(80vw, 80vh, 500px);
-            border-radius: 50%;
+        .moon-container {
             position: relative;
+            width: min(80vw, 80vh);
+            padding-bottom: min(80vw, 80vh); /* Creates a perfect square */
+        }
+        
+        .moon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
             overflow: hidden;
             box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-            aspect-ratio: 1/1;
         }
         
         .moon-surface {
@@ -73,9 +80,11 @@ TEMPLATE = """
     </style>
 </head>
 <body>
-    <div class="moon">
-        <div class="moon-surface"></div>
-        <div class="shadow"></div>
+    <div class="moon-container">
+        <div class="moon">
+            <div class="moon-surface"></div>
+            <div class="shadow"></div>
+        </div>
     </div>
 </body>
 </html>
