@@ -40,14 +40,3 @@ htmlcov/
 # OS specific files
 .DS_Store
 Thumbs.db
-
-# Application specific
-app/static/images/*.png
-!app/static/images/full_moon.png
-!app/static/images/new_moon.png
-!app/static/images/waxing_crescent.png
-!app/static/images/first_quarter.png
-!app/static/images/waxing_gibbous.png
-!app/static/images/waning_gibbous.png
-!app/static/images/last_quarter.png
-!app/static/images/waning_crescent.png

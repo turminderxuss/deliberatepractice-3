@@ -126,5 +126,6 @@ def index():
 
 if __name__ == '__main__':
     print("Starting Minimalist Moon Visualization...")
-    print("Open your web browser and go to: http://127.0.0.1:5000")
-    app.run(debug=True)
+    print("Open your web browser and go to: http://YOUR_SERVER_IP:8080")
+    print("If running locally, use: http://127.0.0.1:8080")
+    app.run(host='0.0.0.0', port=8080, debug=True)
