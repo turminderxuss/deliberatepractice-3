@@ -15,7 +15,7 @@ TEMPLATE = """
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Moon</title>
     <style>
         body {
@@ -30,12 +30,13 @@ TEMPLATE = """
         }
         
         .moon {
-            width: 500px;
-            height: 500px;
+            width: min(80vw, 80vh, 500px);
+            height: min(80vw, 80vh, 500px);
             border-radius: 50%;
             position: relative;
             overflow: hidden;
             box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            aspect-ratio: 1/1;
         }
         
         .moon-surface {
@@ -106,13 +107,13 @@ def calculate_moon_phase():
     if phase_angle <= 180:  # Waxing
         shadow_position = "left: 0;"
         # Calculate shadow width - creates a curve from full width to 0
-        shadow_width = 500 * (1 - 2 * (illumination / 100))
-        shadow_style = f"{shadow_position} width: {max(0, shadow_width)}px;"
+        shadow_width_percent = 100 * (1 - 2 * (illumination / 100))
+        shadow_style = f"{shadow_position} width: {max(0, shadow_width_percent)}%;"
     else:  # Waning
         shadow_position = "right: 0;"
         # Calculate shadow width - creates a curve from 0 to full width
-        shadow_width = 500 * (2 * (illumination / 100) - 1)
-        shadow_style = f"{shadow_position} width: {max(0, shadow_width)}px;"
+        shadow_width_percent = 100 * (2 * (illumination / 100) - 1)
+        shadow_style = f"{shadow_position} width: {max(0, shadow_width_percent)}%;"
     
     return {
         'shadow_style': shadow_style
