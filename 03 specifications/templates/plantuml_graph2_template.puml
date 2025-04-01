@@ -1,0 +1,114 @@
+@startuml Component Interaction
+
+' This diagram template represents component interactions and data flow
+' Modify actor names, components, sequences, and notes as needed for your project
+
+' Define actors and components
+actor User as user
+boundary "User Interface" as ui
+control "Controller" as controller
+entity "Service Layer" as service
+database "Database" as db
+collections "External APIs" as api
+
+' Define the sequence of interactions
+title Component Interaction Diagram
+
+== Initialization ==
+user -> ui : Access application
+activate ui
+ui -> controller : Initialize
+activate controller
+controller -> service : Load configuration
+activate service
+service -> db : Query settings
+activate db
+db --> service : Return settings
+deactivate db
+service --> controller : Configuration loaded
+deactivate service
+controller --> ui : Ready
+deactivate controller
+ui --> user : Display interface
+deactivate ui
+
+== Main Workflow ==
+user -> ui : Request operation
+activate ui
+ui -> controller : Process request
+activate controller
+controller -> service : Execute business logic
+activate service
+
+alt Successful data retrieval
+    service -> db : Query data
+    activate db
+    db --> service : Return data
+    deactivate db
+    
+    opt External data needed
+        service -> api : Request additional data
+        activate api
+        api --> service : Return external data
+        deactivate api
+    end
+    
+    service -> service : Transform data
+    service --> controller : Return result
+    deactivate service
+    controller --> ui : Update view
+    deactivate controller
+    ui --> user : Display results
+    deactivate ui
+    
+else Data retrieval error
+    service -> db : Query data
+    activate db
+    db --> service : Return error
+    deactivate db
+    service --> controller : Report error
+    deactivate service
+    controller --> ui : Show error message
+    deactivate controller
+    ui --> user : Display error
+    deactivate ui
+end
+
+== Error Handling ==
+user -> ui : Retry operation
+activate ui
+ui -> controller : Reprocess with retry flag
+activate controller
+controller -> service : Retry with fallback
+activate service
+service -> api : Fallback request
+activate api
+api --> service : Fallback data
+deactivate api
+service --> controller : Fallback result
+deactivate service
+controller --> ui : Update view with fallback data
+deactivate controller
+ui --> user : Display fallback results
+deactivate ui
+
+' Add notes
+note right of controller
+  Orchestrates the workflow
+  and manages application state
+end note
+
+note right of service
+  Contains core business logic
+  and handles data transformation
+end note
+
+note over db
+  Persistent storage for
+  application data
+end note
+
+footer Generated on %date("yyyy-MM-dd")
+header Confidential - Internal Use Only
+
+@enduml

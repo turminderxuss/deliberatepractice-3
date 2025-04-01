@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A visualization of the current moon phase at 10 PM tonight">
+    <title>{% block title %}Moon Phase Visualization{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Moon Phase Visualization</h1>
+            <p class="subtitle">See how the moon appears at 10 PM tonight</p>
+        </header>
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer>
+            <p>&copy; {{ moon_data.date.year }} Moon Phase Visualization App</p>
+            <p>Astronomical calculations powered by <a href="https://rhodesmill.org/pyephem/" target="_blank" rel="noopener">PyEphem</a></p>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

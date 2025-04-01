@@ -1,0 +1,76 @@
+@startuml System Architecture
+
+' This diagram template represents a high-level system architecture
+' Modify component names, relationships, and details as needed for your project
+
+' Define system components
+package "Frontend" {
+  [Web UI] as web
+  [Mobile App] as mobile
+}
+
+package "API Layer" {
+  [API Gateway] as gateway
+  [Authentication Service] as auth
+}
+
+package "Core Services" {
+  [Service 1] as service1
+  [Service 2] as service2
+  [Service 3] as service3
+}
+
+package "Data Layer" {
+  database "Primary DB" as db
+  database "Cache" as cache
+  [Data Access Layer] as dal
+}
+
+package "External Systems" {
+  cloud "Third-party API 1" as ext1
+  cloud "Third-party API 2" as ext2
+}
+
+' Define relationships
+web --> gateway : HTTP/JSON
+mobile --> gateway : HTTP/JSON
+
+gateway --> auth : validate token
+gateway --> service1 : route request
+gateway --> service2 : route request
+gateway --> service3 : route request
+
+service1 --> dal
+service2 --> dal
+service3 --> dal
+
+dal --> db : read/write
+dal --> cache : read/write
+
+service2 --> ext1 : API call
+service3 --> ext2 : API call
+
+' Add notes and explanations
+note right of gateway
+  Handles routing,
+  rate limiting,
+  and request logging
+end note
+
+note bottom of auth
+  JWT-based
+  authentication
+end note
+
+note right of dal
+  Abstracts database
+  operations and
+  implements caching
+end note
+
+' Add title and metadata
+title System Architecture Diagram
+footer Generated on %date("yyyy-MM-dd")
+header Confidential - Internal Use Only
+
+@enduml

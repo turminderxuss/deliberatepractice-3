@@ -1,0 +1,99 @@
+@startuml Moon Phase App Architecture
+skinparam BackgroundColor white
+skinparam shadowing false
+skinparam DefaultFontName Arial
+skinparam DefaultFontSize 12
+skinparam NoteFontSize 10
+skinparam ArrowColor #333333
+skinparam ArrowFontSize 10
+
+' Define system components
+package "Web Layer" {
+  [Flask Web Server] as server
+  [Jinja2 Templates] as templates
+  [Static Assets] as static
+}
+
+package "Application Core" {
+  [Application Service] as app_service
+  [Moon Phase Calculator] as calculator
+  [Image Provider] as image_provider
+}
+
+package "Domain" {
+  [Moon Phase Domain Model] as domain
+}
+
+package "External Libraries" {
+  [Astronomy Library\n(ephem/skyfield/astropy)] as astro_lib
+  [Image Processing Library] as img_lib
+}
+
+' Define interfaces/ports
+interface "Web Interface" as web_port
+interface "Moon Phase Port" as moon_port
+interface "Image Generation Port" as image_port
+interface "Astronomy Data Port" as astro_port
+
+' Define relationships
+server -down-> web_port
+web_port -down-> app_service
+
+app_service -down-> moon_port
+app_service -down-> image_port
+
+moon_port -down-> calculator
+image_port -down-> image_provider
+
+calculator -down-> astro_port
+calculator -right-> domain
+image_provider -left-> domain
+image_provider -down-> img_lib
+
+astro_port -down-> astro_lib
+
+server -right-> templates
+server -right-> static
+
+' Add notes
+note left of server
+  Handles HTTP requests,
+  serves HTML responses,
+  minimal controller logic
+end note
+
+note left of app_service
+  Orchestrates the workflow,
+  connects web requests to
+  domain services
+end note
+
+note right of calculator
+  Calculates moon phase data
+  based on current date and
+  time (fixed at 10 PM)
+end note
+
+note right of image_provider
+  Retrieves/generates a visual
+  representation of the moon
+  based on phase data
+end note
+
+note bottom of domain
+  Core entity containing moon
+  phase data and business rules
+end note
+
+note bottom of astro_lib
+  Provides calculations for
+  celestial body positions
+  and illumination
+end note
+
+' Add title and metadata
+title Moon Phase App Architecture - Hexagonal/Ports & Adapters
+footer Generated on %date("yyyy-MM-dd")
+header Moon Phase Visualization Application
+
+@enduml

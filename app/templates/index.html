@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Moon Phase for {{ moon_data.date.strftime('%B %d, %Y') }} {% endblock %}
+
+{% block content %}
+    <div class="moon-container">
+        <img src="{{ url_for('serve_image', filename=image_filename) }}" alt="{{ moon_data.phase_name }} - {{ moon_data.illumination_percent|round }}% illuminated" class="moon-image">
+    </div>
+    
+    <div class="moon-data">
+        <h2>Moon Phase Information</h2>
+        
+        <div class="data-item">
+            <span class="data-label">Phase:</span>
+            <span class="data-value">{{ moon_data.phase_name }}</span>
+        </div>
+        
+        <div class="data-item">
+            <span class="data-label">Illumination:</span>
+            <span class="data-value">{{ moon_data.illumination_percent|round }}%</span>
+        </div>
+        
+        <div class="illumination-bar">
+            <div class="illumination-fill" style="width: {{ moon_data.illumination_percent }}%"></div>
+        </div>
+        
+        <div class="data-item">
+            <span class="data-label">Date:</span>
+            <span class="data-value format-date">{{ moon_data.date.strftime('%Y-%m-%d') }}</span>
+        </div>
+        
+        {% if moon_data.next_phase_date %}
+        <div class="data-item">
+            <span class="data-label">Next Phase:</span>
+            <span class="data-value">{{ moon_data.next_phase_name }} (in {{ moon_data.days_until_next_phase }} days)</span>
+        </div>
+        
+        <div class="data-item">
+            <span class="data-label">Next Phase Date:</span>
+            <span class="data-value format-date">{{ moon_data.next_phase_date.strftime('%Y-%m-%d') }}</span>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Any page-specific JavaScript can go here
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Moon phase visualization loaded successfully');
+    });
+</script>
+{% endblock %}

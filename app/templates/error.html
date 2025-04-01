@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Error - Moon Phase Visualization{% endblock %}
+
+{% block content %}
+    <div class="error-container">
+        <h2>Something went wrong</h2>
+        <p>We're sorry, but we encountered an error while trying to show the moon phase.</p>
+        
+        {% if error %}
+        <div class="error-details">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="error-actions">
+            <a href="{{ url_for('index') }}" class="btn">Try Again</a>
+        </div>
+    </div>
+    
+    <style>
+        .error-container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .error-container h2 {
+            color: #f55;
+            margin-bottom: 20px;
+        }
+        
+        .error-details {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            color: #fcc;
+        }
+        
+        .error-actions {
+            margin-top: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #446;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #557;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    console.error('Application error: {{ error }}');
+</script>
+{% endblock %}

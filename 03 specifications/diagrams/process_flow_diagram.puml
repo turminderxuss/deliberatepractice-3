@@ -1,0 +1,84 @@
+@startuml Moon Phase App Process Flow
+skinparam BackgroundColor white
+skinparam shadowing false
+skinparam DefaultFontName Arial
+skinparam DefaultFontSize 12
+skinparam SequenceArrowThickness 1
+skinparam SequenceGroupBodyBackgroundColor #EEEEEE
+
+' Define actors and systems
+actor User as user
+boundary "Flask Web Server" as server
+control "Application Service" as app_service
+entity "Moon Phase Calculator" as calculator
+entity "Image Provider" as image_provider
+database "Astronomy Library" as astro_lib
+
+' Define the sequence of interactions
+title Moon Phase Visualization - Process Flow Diagram
+
+== Request Handling ==
+user -> server : Access application (GET /)
+activate server
+server -> app_service : Request moon phase data for current date
+activate app_service
+
+== Data Processing Pipeline ==
+
+group Moon Phase Calculation
+  app_service -> calculator : Request moon phase for current date at 10 PM
+  activate calculator
+  calculator -> astro_lib : Get astronomical data
+  activate astro_lib
+  astro_lib --> calculator : Return raw astronomical data
+  deactivate astro_lib
+  
+  calculator -> calculator : Calculate phase percentage & name
+  calculator --> app_service : Return MoonPhaseData
+  deactivate calculator
+end
+
+group Visualization Generation
+  app_service -> image_provider : Generate moon visualization
+  activate image_provider
+  image_provider -> image_provider : Create/retrieve moon image based on phase data
+  image_provider --> app_service : Return visualization (image path/data)
+  deactivate image_provider
+end
+
+app_service --> server : Return processed data and visualization
+deactivate app_service
+
+== Response Generation ==
+server -> server : Render template with moon data
+server --> user : Display moon phase visualization
+deactivate server
+
+== Alternative Flow: Error Handling ==
+note over server, app_service
+  If any errors occur during processing:
+  1. Log the error details
+  2. Return an appropriate error page
+  3. Include fallback content when possible
+end note
+
+' Add notes about specific processes
+note right of calculator
+  Calculates:
+  - Illumination percentage
+  - Phase name (New, Crescent, Quarter, Gibbous, Full)
+  - Phase angle
+  - Days until next major phase
+end note
+
+note right of image_provider
+  Options for image generation:
+  1. Use pre-rendered moon phase images
+  2. Dynamically generate using graphical library
+  3. Use NASA imagery with appropriate transformations
+end note
+
+footer Generated on %date("yyyy-MM-dd")
+header Moon Phase Visualization Application
+
+@enduml

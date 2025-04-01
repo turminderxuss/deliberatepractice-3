@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.hypothesis/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Application specific
+app/static/images/*.png
+!app/static/images/full_moon.png
+!app/static/images/new_moon.png
+!app/static/images/waxing_crescent.png
+!app/static/images/first_quarter.png
+!app/static/images/waxing_gibbous.png
+!app/static/images/waning_gibbous.png
+!app/static/images/last_quarter.png
+!app/static/images/waning_crescent.png
